@@ -14,12 +14,9 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Security.Principal;
+namespace Easify.Http;
 
-namespace Easify.Http
+public interface IOperationContext
 {
-    public interface IOperationContext
-    {
-        IPrincipal User { get; }
-    }
+    IPrincipal User { get; }
 }

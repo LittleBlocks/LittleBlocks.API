@@ -1,0 +1,8 @@
+<Project>
+    <ItemGroup Condition="$(MSBuildProjectName.Contains('Sample')) == false">
+        <Compile Include="../GlobalUsings.System.cs" />
+    </ItemGroup>
+    <ItemGroup Condition="$(MSBuildProjectName.Contains('Sample'))">
+        <Compile Include="../../GlobalUsings.System.cs" />
+    </ItemGroup>
+</Project>

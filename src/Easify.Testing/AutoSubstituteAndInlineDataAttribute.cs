@@ -14,15 +14,12 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using AutoFixture.Xunit2;
+namespace Easify.Testing;
 
- namespace Easify.Testing
+public class AutoSubstituteAndInlineDataAttribute : InlineAutoDataAttribute
 {
-    public class AutoSubstituteAndInlineDataAttribute : InlineAutoDataAttribute
+    public AutoSubstituteAndInlineDataAttribute(params object[] values)
+        : base(new AutoSubstituteAndDataAttribute(), values)
     {
-        public AutoSubstituteAndInlineDataAttribute(params object[] values)
-            : base(new AutoSubstituteAndDataAttribute(), values)
-        {
-        }
     }
 }

@@ -1,0 +1,43 @@
+﻿global using Easify.AspNetCore.Security.Impersonation;
+global using Easify.AspNetCore.RequestCorrelation.Core;
+global using Easify.AspNetCore.RequestCorrelation.Core.OptionsBuilder;
+global using Easify.AspNetCore.RequestCorrelation.Domain;
+global using Easify.Sample.WebAPI.IntegrationTests.Helpers;
+global using Easify.AspNetCore;
+global using Easify.AspNetCore.Logging.SeriLog.Fluent;
+global using Easify.Configurations;
+global using Easify.Http;
+global using Easify.AspNetCore.Bootstrap.Extensions;
+global using Easify.Sample.WebAPI.Core.Mappings;
+global using Easify.AspNetCore.RequestCorrelation;
+global using Easify.AspNetCore.Bootstrap;
+global using Easify.AspNetCore.Security.Fluent;
+global using Easify.RestEase;
+global using Easify.Sample.WebAPI.Core;
+global using Easify.Sample.WebAPI.Domain;
+global using Easify.Testing.Extensions;
+global using Easify.Sample.WebAPI.IntegrationTests.Helpers.Domain;
+
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection.Extensions;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.AspNetCore;
+global using Microsoft.AspNetCore.Mvc.Testing;
+global using Microsoft.AspNetCore.Http.Features;
+global using Microsoft.AspNetCore.TestHost;
+global using Microsoft.Extensions.Diagnostics.HealthChecks;
+
+global using Newtonsoft.Json;
+global using Serilog;
+global using Serilog.Events;
+
+// unit testing
+global using AutoMapper;
+global using FluentAssertions;
+global using NSubstitute;
+global using Xunit;
+global using Xunit.Abstractions;

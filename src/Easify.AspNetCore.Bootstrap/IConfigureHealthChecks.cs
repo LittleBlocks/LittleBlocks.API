@@ -1,11 +1,6 @@
-using System;
-using Easify.Bootstrap;
-using Microsoft.Extensions.DependencyInjection;
+namespace Easify.AspNetCore.Bootstrap;
 
-namespace Easify.AspNetCore.Bootstrap
+public interface IConfigureHealthChecks : IExtendPipeline
 {
-    public interface IConfigureHealthChecks : IExtendPipeline
-    {
-        IExtendPipeline ConfigureHealthChecks(Action<IHealthChecksBuilder> configure);
-    }
+    IExtendPipeline ConfigureHealthChecks(Action<IHealthChecksBuilder> configure);
 }

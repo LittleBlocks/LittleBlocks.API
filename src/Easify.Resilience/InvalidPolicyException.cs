@@ -1,11 +1,8 @@
-﻿using System;
+﻿namespace Easify.Resilience;
 
-namespace Easify.Resilience
+public sealed class InvalidPolicyException : Exception
 {
-    public sealed class InvalidPolicyException : Exception
+    public InvalidPolicyException(string message): base(message)
     {
-        public InvalidPolicyException(string message): base(message)
-        {
-        }
     }
 }

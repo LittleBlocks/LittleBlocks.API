@@ -14,24 +14,18 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Hosting;
+namespace Easify.Testing.Integration;
 
-namespace Easify.Testing.Integration
+public class IntegrationTestApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
 {
-    public class IntegrationTestApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
+    protected override IHostBuilder CreateHostBuilder()
     {
-        protected override IHostBuilder CreateHostBuilder()
-        {
-            var builder = Host
-                .CreateDefaultBuilder()
-                .ConfigureWebHostDefaults(host =>
-                {
-                    host.UseStartup<TStartup>().UseTestServer();
-                });
-            return builder;
-        }
+        var builder = Host
+            .CreateDefaultBuilder()
+            .ConfigureWebHostDefaults(host =>
+            {
+                host.UseStartup<TStartup>().UseTestServer();
+            });
+        return builder;
     }
 }

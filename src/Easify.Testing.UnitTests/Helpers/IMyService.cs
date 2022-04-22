@@ -14,11 +14,10 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace Easify.Testing.UnitTests.Helpers
+namespace Easify.Testing.UnitTests.Helpers;
+
+public interface IMyService
 {
-    public interface IMyService
-    {
-        void DoWork();
-        void DoWork(string value);
-    }
+    void DoWork();
+    void DoWork(string value);
 }

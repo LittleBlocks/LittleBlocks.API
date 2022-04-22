@@ -1,45 +1,37 @@
 // This software is part of the Easify framework
 // Copyright (C) 2019 Intermediate Capital Group
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Affero General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using Easify.AspNetCore.RequestCorrelation.Domain;
-using Easify.ExceptionHandling.ConfigurationBuilder;
-using Easify.RestEase;
-using FluentValidation;
-using RestEase;
+namespace Easify.AspNetCore.ExceptionHandling;
 
-namespace Easify.AspNetCore.ExceptionHandling
+public static class GlobalErrorHandlerConfigurationBuilderExtensions
 {
-    public static class GlobalErrorHandlerConfigurationBuilderExtensions
+    private const string GenericErrorMessage = "Unknown Error Happened";
+    private const string GenericErrorType = "UnknownException";
+
+    public static GlobalErrorHandlerConfigurationBuilder UseDefault(
+        this GlobalErrorHandlerConfigurationBuilder builder)
     {
-        private const string GenericErrorMessage = "Unknown Error Happened";
-        private const string GenericErrorType = "UnknownException";
+        if (builder == null) throw new ArgumentNullException(nameof(builder));
 
-        public static GlobalErrorHandlerConfigurationBuilder UseDefault(
-            this GlobalErrorHandlerConfigurationBuilder builder)
-        {
-            if (builder == null) throw new ArgumentNullException(nameof(builder));
+        builder
+            .AndHandle<ValidationException>()
+            .AndHandle<NotCorrelatedRequestException>()
+            .AndHandle<ApiException>(b => b.UseBuilderForApi(), f => f.ClientError())
+            .UseGenericError(GenericErrorMessage, GenericErrorType);
 
-            builder
-                .AndHandle<ValidationException>()
-                .AndHandle<NotCorrelatedRequestException>()
-                .AndHandle<ApiException>(b => b.UseBuilderForApi(), f => f.ClientError())
-                .UseGenericError(GenericErrorMessage, GenericErrorType);
-
-            return builder;
-        }
+        return builder;
     }
 }

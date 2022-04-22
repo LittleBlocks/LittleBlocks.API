@@ -1,0 +1,31 @@
+﻿global using System;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using System.Collections.Generic;
+global using System.Net.Http;
+global using Easify.Sample.WebAPI.Domain;
+global using Easify.Sample.WebAPI.Core;
+global using Easify.RestEase.Client;
+global using Easify.AspNetCore;
+global using Easify.Logging.SeriLog.Loggly;
+global using Easify.Logging.SeriLog.Seq;
+global using Easify.AspNetCore.Bootstrap;
+global using Easify.AspNetCore.Bootstrap.Extensions;
+global using Easify.AspNetCore.Logging.SeriLog;
+global using Easify.RestEase;
+global using Easify.Sample.WebAPI.Core.Mappings;
+
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.FeatureManagement;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.Extensions.DependencyInjection;
+
+global using AutoMapper;
+global using FluentValidation;
+global using RestEase;
+global using Foil;

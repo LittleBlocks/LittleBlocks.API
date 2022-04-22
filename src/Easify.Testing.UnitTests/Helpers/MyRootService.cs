@@ -13,27 +13,25 @@
 //
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-using System;
 
- namespace Easify.Testing.UnitTests.Helpers
+namespace Easify.Testing.UnitTests.Helpers;
+
+public class MyRootService
 {
-    public class MyRootService
+    private readonly IMyService _myService;
+
+    public MyRootService(IMyService myService)
     {
-        private readonly IMyService _myService;
+        _myService = myService ?? throw new ArgumentNullException(nameof(myService));
+    }
 
-        public MyRootService(IMyService myService)
-        {
-            _myService = myService ?? throw new ArgumentNullException(nameof(myService));
-        }
+    public void DoWork()
+    {
+        _myService.DoWork();
+    }
 
-        public void DoWork()
-        {
-            _myService.DoWork();
-        }
-
-        public void DoWork(string value)
-        {
-            _myService.DoWork(value);
-        }
+    public void DoWork(string value)
+    {
+        _myService.DoWork(value);
     }
 }

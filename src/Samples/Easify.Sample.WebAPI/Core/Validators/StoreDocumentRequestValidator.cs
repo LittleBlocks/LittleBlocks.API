@@ -14,42 +14,38 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
 using Easify.Extensions;
-using Easify.Sample.WebAPI.Domain;
-using FluentValidation;
 
-namespace Easify.Sample.WebAPI.Core.Validators
+namespace Easify.Sample.WebAPI.Core.Validators;
+
+public sealed class StoreDocumentRequestValidator : AbstractValidator<StoreDocumentsRequest>
 {
-    public sealed class StoreDocumentRequestValidator : AbstractValidator<StoreDocumentsRequest>
+    private readonly HashSet<string> _supportedOperations = new HashSet<string>(new List<string>
     {
-        private readonly HashSet<string> _supportedOperations = new HashSet<string>(new List<string>
-        {
-            "Validate",
-            "Process",
-            "Publish"
-        });
+        "Validate",
+        "Process",
+        "Publish"
+    });
 
-        public StoreDocumentRequestValidator()
-        {
-            RuleFor(m => m.RequestId).NotEmpty();
-            RuleFor(m => m.Operation).Must(OneOfSupportedOperations).WithMessage(GetValidOperationsMessage);
-            RuleFor(c => c.Owner).NotNull().SetValidator(new OwnerValidator());
-            RuleForEach(c => c.Documents).NotNull().NotEmpty().SetValidator(new DocumentValidator());
-        }
+    public StoreDocumentRequestValidator()
+    {
+        RuleFor(m => m.RequestId).NotEmpty();
+        RuleFor(m => m.Operation).Must(OneOfSupportedOperations).WithMessage(GetValidOperationsMessage);
+        RuleFor(c => c.Owner).NotNull().SetValidator(new OwnerValidator());
+        RuleForEach(c => c.Documents).NotNull().NotEmpty().SetValidator(new DocumentValidator());
+    }
 
-        private string GetValidOperationsMessage(StoreDocumentsRequest request)
-        {
-            if (request.Operation.AnyValue())
-                return
-                    $"'{request.Operation}' is not supported. Supported operations are: {string.Join(", ", _supportedOperations)}.";
+    private string GetValidOperationsMessage(StoreDocumentsRequest request)
+    {
+        if (request.Operation.AnyValue())
+            return
+                $"'{request.Operation}' is not supported. Supported operations are: {string.Join(", ", _supportedOperations)}.";
 
-            return $"Operation must be supplied! Supported operations are: {string.Join(", ", _supportedOperations)}.";
-        }
+        return $"Operation must be supplied! Supported operations are: {string.Join(", ", _supportedOperations)}.";
+    }
 
-        private bool OneOfSupportedOperations(string operation)
-        {
-            return _supportedOperations.Contains(operation);
-        }
+    private bool OneOfSupportedOperations(string operation)
+    {
+        return _supportedOperations.Contains(operation);
     }
 }
