@@ -1,10 +1,10 @@
-# Easify
+# LittleBlocks
 
-![Release](https://github.com/icgam/Easify/workflows/Release%20build%20on%20master/main/badge.svg) ![CI](https://github.com/icgam/Easify/workflows/CI%20on%20Branches%20and%20PRs/badge.svg) ![](https://img.shields.io/nuget/v/Easify.svg?style=flat-square)
+![Release](https://github.com/LittleBlocks/LittleBlocks.API/workflows/Release%20build%20on%20master/main/badge.svg) ![CI](https://github.com/LittleBlocks/LittleBlocks.API/workflows/CI%20on%20Branches%20and%20PRs/badge.svg) ![](https://img.shields.io/nuget/v/LittleBlocks.svg?style=flat-square)
 
 ## Introduction
 
-Easify is a set of libraries which facilitate different aspects of a Restful/Microservice api and takes away the boilerplate configuration/bootstrap code that needs to be written each time a new API project is setup. There are up's and down's to this approach, however the benefit of this approach is to setup consistent api projects faster and easier.
+LittleBlocks is a set of libraries which facilitate different aspects of a Restful/Microservice api and takes away the boilerplate configuration/bootstrap code that needs to be written each time a new API project is setup. There are up's and down's to this approach, however the benefit of this approach is to setup consistent api projects faster and easier.
 
 ## Features
 
@@ -26,11 +26,11 @@ For using the full benefit of the library, Create a simple asp.net core project 
 
 ```cmd
 
-dotnet add package Easify.AspNetCore.Bootstrap
+dotnet add package LittleBlocks.AspNetCore.Bootstrap
 
 or
  
-Install-Package Easify.AspNetCore.Bootstrap
+Install-Package LittleBlocks.AspNetCore.Bootstrap
 
 ```
 
@@ -81,5 +81,5 @@ In order to achieve all of this functionality you merely need a few lines of cod
 
 The project/solution is ready to be running in visual studio or using dotnet cli.
 
-More detail information can be found in [wiki](https://github.com/icgam/Easify/wiki)
+More detail information can be found in [wiki](https://github.com/LittleBlocks/LittleBlocks.API/wiki)
 

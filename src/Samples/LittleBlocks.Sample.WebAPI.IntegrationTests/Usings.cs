@@ -1,0 +1,43 @@
+﻿global using LittleBlocks.AspNetCore.Security.Impersonation;
+global using LittleBlocks.AspNetCore.RequestCorrelation.Core;
+global using LittleBlocks.AspNetCore.RequestCorrelation.Core.OptionsBuilder;
+global using LittleBlocks.AspNetCore.RequestCorrelation.Domain;
+global using LittleBlocks.Sample.WebAPI.IntegrationTests.Helpers;
+global using LittleBlocks.AspNetCore;
+global using LittleBlocks.AspNetCore.Logging.SeriLog.Fluent;
+global using LittleBlocks.Configurations;
+global using LittleBlocks.Http;
+global using LittleBlocks.AspNetCore.Bootstrap.Extensions;
+global using LittleBlocks.Sample.WebAPI.Core.Mappings;
+global using LittleBlocks.AspNetCore.RequestCorrelation;
+global using LittleBlocks.AspNetCore.Bootstrap;
+global using LittleBlocks.AspNetCore.Security.Fluent;
+global using LittleBlocks.RestEase;
+global using LittleBlocks.Sample.WebAPI.Core;
+global using LittleBlocks.Sample.WebAPI.Domain;
+global using LittleBlocks.Testing.Extensions;
+global using LittleBlocks.Sample.WebAPI.IntegrationTests.Helpers.Domain;
+
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection.Extensions;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.AspNetCore;
+global using Microsoft.AspNetCore.Mvc.Testing;
+global using Microsoft.AspNetCore.Http.Features;
+global using Microsoft.AspNetCore.TestHost;
+global using Microsoft.Extensions.Diagnostics.HealthChecks;
+
+global using Newtonsoft.Json;
+global using Serilog;
+global using Serilog.Events;
+
+// unit testing
+global using AutoMapper;
+global using FluentAssertions;
+global using NSubstitute;
+global using Xunit;
+global using Xunit.Abstractions;
