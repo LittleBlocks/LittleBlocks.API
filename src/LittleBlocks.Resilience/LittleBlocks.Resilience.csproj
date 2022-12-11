@@ -4,7 +4,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>LittleBlocks.Resilience</Title>
         <Authors>Mohammad Moattar</Authors>
-        <Company>ICG</Company>
+        <Company>LittleBlocks</Company>
         <Description>Resilience library for LittleBlocks</Description>
         <PackageProjectUrl>http://github.com/LittleBlocks/LittleBlocks.API</PackageProjectUrl>
         <RepositoryUrl>https://github.com/LittleBlocks/LittleBlocks.API</RepositoryUrl>

@@ -5,7 +5,7 @@
     <Description>Library provides hosting infrastructure for .NET Core API to be hosted as a Windows Service</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Mohammad Moattar; Aurimas Gecas</Authors>
-    <Company>ICG</Company>
+    <Company>LittleBlocks</Company>
     <PackageProjectUrl>http://github.com/LittleBlocks/LittleBlocks.API</PackageProjectUrl>
     <RepositoryUrl>https://github.com/LittleBlocks/LittleBlocks.API</RepositoryUrl>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>

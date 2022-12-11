@@ -4,7 +4,7 @@
     <Description>Exception handling components. Enables a concept of us having "friendy/user" exceptions and "bad/system" exceptions.</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Mohammad Moattar; Aurimas Gecas</Authors>
-    <Company>ICG</Company>
+    <Company>LittleBlocks</Company>
     <PackageProjectUrl>http://github.com/LittleBlocks/LittleBlocks.API</PackageProjectUrl>
     <RepositoryUrl>https://github.com/LittleBlocks/LittleBlocks.API</RepositoryUrl>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>

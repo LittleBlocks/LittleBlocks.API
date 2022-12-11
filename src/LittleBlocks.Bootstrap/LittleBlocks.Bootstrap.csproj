@@ -4,7 +4,7 @@
     <Description>Packages provide CORE interfaces that are used in .NET Core apps bootstrapping. Interfaces allows one to extend the pipeline with custom/optional extension methods to configure extra features, such as security, messaging, etc.</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Mohammad Moattar; Aurimas Gecas</Authors>
-    <Company>ICG</Company>
+    <Company>LittleBlocks</Company>
     <PackageProjectUrl>http://github.com/LittleBlocks/LittleBlocks.API</PackageProjectUrl>
     <RepositoryUrl>https://github.com/LittleBlocks/LittleBlocks.API</RepositoryUrl>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>

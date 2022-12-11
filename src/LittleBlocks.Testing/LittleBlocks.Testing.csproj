@@ -3,7 +3,7 @@
     <PropertyGroup>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Mohammad Moattar, David Cassell</Authors>
-        <Company>ICG</Company>
+        <Company>LittleBlocks</Company>
         <Description>Testing library which contains useful tools and helpers</Description>
         <PackageProjectUrl>http://github.com/LittleBlocks/LittleBlocks.API</PackageProjectUrl>
         <RepositoryUrl>https://github.com/LittleBlocks/LittleBlocks.API</RepositoryUrl>

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Mohammad Moattar; Aurimas Gecas</Authors>
-    <Company>ICG</Company>
+    <Company>LittleBlocks</Company>
     <Description>Core components such as ServiceCollection based implementations for Automapper and ComponentResolver</Description>
     <PackageProjectUrl>http://github.com/LittleBlocks/LittleBlocks.API</PackageProjectUrl>
     <RepositoryUrl>https://github.com/LittleBlocks/LittleBlocks.API</RepositoryUrl>
