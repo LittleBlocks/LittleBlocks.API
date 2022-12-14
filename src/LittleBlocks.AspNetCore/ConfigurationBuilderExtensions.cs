@@ -18,7 +18,7 @@ namespace LittleBlocks.AspNetCore;
 
 public static class ConfigurationBuilderExtensions
 {
-    public const string EnvironmentVariablePrefix = "LittleBlocks_";
+    public const string EnvironmentVariablePrefix = "LITTLEBLOCKS_";
     public static IConfigurationBuilder ConfigureBuilder(this IConfigurationBuilder builder, ConfigurationOptions options)
     {
         if (builder == null) throw new ArgumentNullException(nameof(builder));
