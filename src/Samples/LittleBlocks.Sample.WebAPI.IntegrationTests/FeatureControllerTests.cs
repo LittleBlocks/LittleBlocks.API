@@ -1,4 +1,6 @@
-﻿namespace LittleBlocks.Sample.WebAPI.IntegrationTests;
+﻿using System.Net;
+
+namespace LittleBlocks.Sample.WebAPI.IntegrationTests;
 
 public class FeatureControllerTests
 {

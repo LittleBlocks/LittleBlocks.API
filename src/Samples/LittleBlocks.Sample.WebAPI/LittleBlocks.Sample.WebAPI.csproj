@@ -5,11 +5,11 @@
     <LangVersion>10</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="5.0.1" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="5.0.1" />
-    <PackageReference Include="AspNetcore.HealthChecks.Publisher.Seq" Version="5.0.1" />
-    <PackageReference Include="System.Linq.Async" Version="5.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.5" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.5" />
+    <PackageReference Include="AspNetcore.HealthChecks.Publisher.Seq" Version="6.0.2" />
+    <PackageReference Include="System.Linq.Async" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LittleBlocks.Logging.SeriLog.Loggly\LittleBlocks.Logging.SeriLog.Loggly.csproj" />
