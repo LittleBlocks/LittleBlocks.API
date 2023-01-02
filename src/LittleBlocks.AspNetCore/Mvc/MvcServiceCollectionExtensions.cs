@@ -31,21 +31,22 @@ public static class MvcServiceCollectionExtensions
                 options.Filters.Add(typeof(LoggingActionFilter));
                 options.Filters.Add(typeof(ValidateModelStateActionFilter));
             })
-            .AddNewtonsoftJson(o => o.SerializerSettings.ConfigureJsonSettings())
-            .AddFluentValidation(fv => fv.RegisterValidatorsFromDomain<TStartup>(prefix));
+            .AddNewtonsoftJson(o => o.SerializerSettings.ConfigureJsonSettings());
 
+        services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+        services.RegisterValidatorsFromDomain<TStartup>(prefix);
         return services;
     }
 
-    private static void RegisterValidatorsFromDomain<T>(this FluentValidationMvcConfiguration config,
+    private static void RegisterValidatorsFromDomain<T>(this IServiceCollection services,
         string assemblyNameStartsWith) where T : class
     {
-        if (config == null) throw new ArgumentNullException(nameof(config));
+        if (services == null) throw new ArgumentNullException(nameof(services));
         if (string.IsNullOrWhiteSpace(assemblyNameStartsWith))
             throw new ArgumentException("Value cannot be null or whitespace.", nameof(assemblyNameStartsWith));
 
         var assemblies = GetReferencedAssembliesFromType<T>(assemblyNameStartsWith);
-        config.RegisterValidatorsFromAssemblies(assemblies);
+        services.AddValidatorsFromAssemblies(assemblies);
     }
 
     private static IEnumerable<Assembly> GetReferencedAssembliesFromType<T>(string assemblyNameStartsWith)

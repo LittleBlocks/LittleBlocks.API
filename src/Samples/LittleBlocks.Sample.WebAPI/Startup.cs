@@ -38,7 +38,7 @@ public class Startup
                 {
                     c.AddUrlGroup(new Uri("http://www.google.com"), HttpMethod.Get, "google");
                     c.AddUrlGroup(new Uri("http://www.Microsoft.com"), HttpMethod.Get, "microsoft");
-                    c.AddUrlGroup(new Uri("http://www.LittleBlocks.com"), HttpMethod.Get, "LittleBlocks");
+                    c.AddUrlGroup(new Uri("https://github.com/littleblocks"), HttpMethod.Get, "LittleBlocks");
                     c.AddSeqPublisher(setup =>
                     {
                         setup.Endpoint = Configuration["seq:ServerUrl"];
