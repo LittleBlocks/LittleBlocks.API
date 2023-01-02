@@ -16,7 +16,7 @@
 
 namespace LittleBlocks.Resilience;
 
-public class PolicyFor
+public static class PolicyFor
 {
     public static Policy DataStoreResilienceStrategy<TException>(Action<PolicyOptions> configure = null) where TException : Exception
     {

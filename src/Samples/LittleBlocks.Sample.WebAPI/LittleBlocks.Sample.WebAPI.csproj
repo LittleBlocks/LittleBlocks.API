@@ -32,12 +32,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="logs\loggly-buffer-20200707.json" />
-    <_ContentIncludedByDefault Remove="logs\loggly-buffer-20200714.json" />
-    <_ContentIncludedByDefault Remove="logs\loggly-buffer-20200715.json" />
-    <_ContentIncludedByDefault Remove="logs\loggly-buffer-20200724.json" />
-    <_ContentIncludedByDefault Remove="logs\loggly-buffer-20201002.json" />
-    <_ContentIncludedByDefault Remove="logs\loggly-buffer-20201006.json" />
-  </ItemGroup>
 </Project>

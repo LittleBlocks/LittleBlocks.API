@@ -114,7 +114,7 @@ public sealed class LoggerBuilder : ILoggerBuilder, IBuildLogger
                 retainedFileCountLimit: options.LogFilesToRetain,
                 fileSizeLimitBytes: options.LogFileSizeLimitInBytes,
                 flushToDiskInterval: options.FlushToDiskInterval)
-            .WriteTo.LiterateConsole()
+            .WriteTo.Console()
             .WriteTo.InMemoryCache();
 
         LoggingLevelSwitchProvider.Instance.MinimumLevel =
