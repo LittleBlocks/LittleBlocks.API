@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Net.Http;
-using Serilog.AspNetCore;
+using Microsoft.Extensions.Hosting;
 
 namespace LittleBlocks.Sample.WebAPI.IntegrationTests.Helpers;
 
@@ -55,21 +55,24 @@ public sealed class TestApplicationFactory<TStartup> : WebApplicationFactory<TSt
             return Path.Combine(path, logsDirectory);
         }
     }
-
-    protected override IWebHostBuilder CreateWebHostBuilder()
+    
+    protected override IHostBuilder CreateHostBuilder()
     {
-        var hostBuilder = WebHost.CreateDefaultBuilder()
-            .ConfigureAppConfiguration((context, builder) =>
+        var hostBuilder = Host.CreateDefaultBuilder()
+            .ConfigureWebHostDefaults(webHostBuilder =>
             {
-                var env = context.HostingEnvironment;
-                env.EnvironmentName = _options.Environment;
+                webHostBuilder.ConfigureAppConfiguration((context, builder) =>
+                    {
+                        var env = context.HostingEnvironment;
+                        env.EnvironmentName = _options.Environment;
 
-                var configOptions = new ConfigurationOptions(env.ContentRootPath, env.EnvironmentName,
-                    env.ApplicationName, new string[] { });
-                builder.ConfigureBuilder(configOptions);
-            })
-            .UseStartup<TStartup>()
-            .ConfigureServices(_options.ConfigureServices);
+                        var configOptions = new ConfigurationOptions(env.ContentRootPath, env.EnvironmentName,
+                            env.ApplicationName, new string[] { });
+                        builder.ConfigureBuilder(configOptions);
+                    })
+                    .UseStartup<TStartup>()
+                    .ConfigureServices(_options.ConfigureServices);
+            });
 
         if (_options.EnableLoggingToFile)
             hostBuilder.UseSerilog((context, configuration) =>
