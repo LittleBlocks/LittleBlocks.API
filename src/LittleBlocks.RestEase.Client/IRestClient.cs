@@ -24,7 +24,7 @@ namespace LittleBlocks.RestEase.Client
         [Header(HttpHeaders.HttpRequestId)]
         string CorrelationId { get; set; }
 
-        [Header(HeaderNames.Authorization)]
+        [Header(HttpHeaders.Authorization)]
         AuthenticationHeaderValue Authorization { get; set; }
     }
 }
