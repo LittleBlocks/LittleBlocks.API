@@ -41,8 +41,8 @@ public class Startup
                     c.AddUrlGroup(new Uri("https://github.com/littleblocks"), HttpMethod.Get, "LittleBlocks");
                     c.AddSeqPublisher(setup =>
                     {
-                        setup.Endpoint = Configuration["seq:ServerUrl"];
-                        setup.ApiKey = Configuration["seq:ApiKey"];
+                        setup.Endpoint = Configuration["Logging:Seq:ServerUrl"];
+                        setup.ApiKey = Configuration["Logging:Seq:ApiKey"];
                     });
                 })
                 .ConfigureMappings(c =>

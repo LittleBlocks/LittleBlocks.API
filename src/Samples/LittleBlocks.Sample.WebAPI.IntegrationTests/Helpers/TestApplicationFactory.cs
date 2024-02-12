@@ -56,33 +56,30 @@ public sealed class TestApplicationFactory<TStartup> : WebApplicationFactory<TSt
         }
     }
     
-    protected override IHostBuilder CreateHostBuilder()
+    protected override IWebHostBuilder CreateWebHostBuilder()
     {
-        var hostBuilder = Host.CreateDefaultBuilder()
-            .ConfigureWebHostDefaults(webHostBuilder =>
+        var hostBuilder = WebHost.CreateDefaultBuilder()
+            .ConfigureAppConfiguration((context, builder) =>
             {
-                webHostBuilder.ConfigureAppConfiguration((context, builder) =>
-                    {
-                        var env = context.HostingEnvironment;
-                        env.EnvironmentName = _options.Environment;
+                var env = context.HostingEnvironment;
+                env.EnvironmentName = _options.Environment;
 
-                        var configOptions = new ConfigurationOptions(env.ContentRootPath, env.EnvironmentName,
-                            env.ApplicationName, new string[] { });
-                        builder.ConfigureBuilder(configOptions);
-                    })
-                    .UseStartup<TStartup>()
-                    .ConfigureServices(_options.ConfigureServices);
-            });
-
-        if (_options.EnableLoggingToFile)
-            hostBuilder.UseSerilog((context, configuration) =>
-            {
-                var loggerBuilder =
-                    new LoggerBuilder(context.HostingEnvironment, context.Configuration, configuration)
-                        .ConfigureLogger<TStartup>(c =>
-                            c.FlushToDiskEveryInMs(1).SaveLogsTo(LogFilePath));
-                loggerBuilder.Build<TStartup>();
-            });
+                var configOptions = new ConfigurationOptions(env.ContentRootPath, env.EnvironmentName,
+                    env.ApplicationName, new string[] { });
+                builder.ConfigureBuilder(configOptions);
+            })
+            .UseStartup<TStartup>()
+            .ConfigureServices(_options.ConfigureServices);
+        //
+        // if (_options.EnableLoggingToFile)
+        //     hostBuilder.UseSerilog((context, configuration) =>
+        //     {
+        //         var loggerBuilder =
+        //             new LoggerBuilder(context.HostingEnvironment, context.Configuration, configuration)
+        //                 .ConfigureLogger<TStartup>(c =>
+        //                     c.FlushToDiskEveryInMs(1).SaveLogsTo(LogFilePath));
+        //         loggerBuilder.Build<TStartup>();
+        //     });
 
         return hostBuilder;
     }

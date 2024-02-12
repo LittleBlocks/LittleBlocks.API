@@ -24,22 +24,22 @@ public static class HostAsWeb
         string[] args)
         where TStartup : class
     {
-        if (loggerConfigure == null) throw new ArgumentNullException(nameof(loggerConfigure));
-
+        ArgumentNullException.ThrowIfNull(loggerConfigure);
+        
         var host = WebHost
-            .CreateDefaultBuilder<TStartup>(args)
-            .ConfigureAppConfiguration((hostingContext, config) =>
+            .CreateDefaultBuilder(args)
+            .UseStartup<TStartup>()
+            .ConfigureAppConfiguration((context, config) =>
             {
-                var env = hostingContext.HostingEnvironment;
+                var env = context.HostingEnvironment;
                 var options = new ConfigurationOptions(env.ContentRootPath, env.EnvironmentName,
                     env.ApplicationName, args);
                 config.ConfigureBuilder(options);
                 configurationConfigure(config);
             })
-            .UseSerilog((context, configuration) =>
+            .ConfigureServices((context, services) =>
             {
-                loggerConfigure(new LoggerBuilder(context.HostingEnvironment, context.Configuration,
-                    configuration)).Build<TStartup>();
+                loggerConfigure(new LoggerBuilder(context.HostingEnvironment, context.Configuration, new LoggerConfiguration())).Build<TStartup>();
             })
             .Build();
 
