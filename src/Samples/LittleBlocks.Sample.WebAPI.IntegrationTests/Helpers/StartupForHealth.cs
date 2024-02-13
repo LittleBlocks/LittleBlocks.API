@@ -60,7 +60,7 @@ public sealed class StartupForHealthy : StartupForHealth<StartupForHealthy>
     }
 
     protected override Action<IHealthChecksBuilder> ConfigureHealth =>
-        b => b.AddUrlGroup(new Uri("http://www.microsoft.com"), HttpMethod.Get, "microsoft");
+        b => b.AddUrlGroup(new Uri("http://httpbin.org/status/200"), HttpMethod.Get, "microsoft");
 }
 
 public sealed class StartupForUnhealthy : StartupForHealth<StartupForUnhealthy>
@@ -72,7 +72,7 @@ public sealed class StartupForUnhealthy : StartupForHealth<StartupForUnhealthy>
     protected override Action<IHealthChecksBuilder> ConfigureHealth =>
         b =>
         {
-            b.AddUrlGroup(new Uri("http://www.microsoft.com"), HttpMethod.Get, "microsoft");
-            b.AddUrlGroup(new Uri("http://www.microsoftwithwrongurl.com"), HttpMethod.Get, "microsoftwithwrongurl");
+            b.AddUrlGroup(new Uri("http://httpbin.org/status/200"), HttpMethod.Get, "microsoft");
+            b.AddUrlGroup(new Uri("http://httpbintest.org/status/200"), HttpMethod.Get, "microsoftwithwrongurl");
         };
 }
