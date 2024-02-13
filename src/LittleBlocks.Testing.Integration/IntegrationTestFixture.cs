@@ -45,20 +45,11 @@ public class IntegrationTestFixture<TStartup> : FixtureBase where TStartup : cla
         var client = server.CreateClient<TStartup, T>();
         return new ClientAppPair<T, TStartup>(client, server);
     }
+    
+    
 
     protected virtual WebApplicationFactory<TStartup> CreateApplicationFactory()
     {
-        return new IntegrationTestApplicationFactory<TStartup>()
-            .WithWebHostBuilder(builder =>
-            {
-                builder.ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    var env = hostingContext.HostingEnvironment;
-                    env.EnvironmentName = "Development";
-
-                    config.SetBasePath(env.ContentRootPath)
-                        .AddJsonFile("appsettings.json", false, true);
-                });
-            });
+        return new IntegrationTestApplicationFactory<TStartup>();
     }
 }

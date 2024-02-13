@@ -14,18 +14,27 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using Microsoft.AspNetCore;
+
 namespace LittleBlocks.Testing.Integration;
 
 public class IntegrationTestApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
 {
-    protected override IHostBuilder CreateHostBuilder()
+ 
+    protected override IWebHostBuilder CreateWebHostBuilder()
     {
-        var builder = Host
-            .CreateDefaultBuilder()
-            .ConfigureWebHostDefaults(host =>
+        var hostBuilder = WebHost.CreateDefaultBuilder()
+            .ConfigureAppConfiguration((context, builder) =>
             {
-                host.UseStartup<TStartup>().UseTestServer();
-            });
-        return builder;
+                var env = context.HostingEnvironment;
+                env.EnvironmentName = "Development";
+
+                builder.SetBasePath(env.ContentRootPath)
+                    .AddJsonFile("appsettings.json", false, true);
+            })
+            .UseStartup<TStartup>()
+            .UseTestServer();
+
+        return hostBuilder;
     }
 }

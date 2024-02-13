@@ -40,7 +40,7 @@ public sealed class ValidationControllerTests
                 new Document()
             }
         };
-        using var fixture = TestApplicationFactory<StartupForIntegration>.Create();
+        await using var fixture = TestApplicationFactory<StartupForIntegration>.Create();
 
         // Act
         var response = await fixture.CreateClient().PostAsync("api/Validation", new JsonContent(request));
@@ -53,7 +53,7 @@ public sealed class ValidationControllerTests
     public async Task ForPostShouldReturnErrorWithMissingArguments()
     {
         // Arrange
-        using var fixture = TestApplicationFactory<StartupForIntegration>.Create();
+        await using var fixture = TestApplicationFactory<StartupForIntegration>.Create();
 
         // Act
         var response = await fixture.CreateClient().PostAsync("api/Validation",
