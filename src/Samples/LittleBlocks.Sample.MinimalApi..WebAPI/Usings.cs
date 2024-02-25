@@ -1,0 +1,27 @@
+﻿global using System;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using System.Collections.Generic;
+global using System.Net.Http;
+global using LittleBlocks.RestEase.Client;
+global using LittleBlocks.AspNetCore;
+global using LittleBlocks.Logging.SeriLog.Loggly;
+global using LittleBlocks.Logging.SeriLog.Seq;
+global using LittleBlocks.AspNetCore.Bootstrap;
+global using LittleBlocks.AspNetCore.Bootstrap.Extensions;
+global using LittleBlocks.AspNetCore.Logging.SeriLog;
+global using LittleBlocks.RestEase;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.FeatureManagement;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.Extensions.DependencyInjection;
+
+global using AutoMapper;
+global using FluentValidation;
+global using RestEase;
+global using Foil;
