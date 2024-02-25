@@ -1,5 +1,5 @@
 // This software is part of the LittleBlocks framework
-// Copyright (C) 2022 LittleBlocks
+// Copyright (C) 2024 LittleBlocks
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
@@ -60,7 +60,7 @@ public sealed class StartupForHealthy : StartupForHealth<StartupForHealthy>
     }
 
     protected override Action<IHealthChecksBuilder> ConfigureHealth =>
-        b => b.AddUrlGroup(new Uri("http://www.microsoft.com"), HttpMethod.Get, "microsoft");
+        b => b.AddUrlGroup(new Uri("http://httpbin.org/status/200"), HttpMethod.Get, "microsoft");
 }
 
 public sealed class StartupForUnhealthy : StartupForHealth<StartupForUnhealthy>
@@ -72,7 +72,7 @@ public sealed class StartupForUnhealthy : StartupForHealth<StartupForUnhealthy>
     protected override Action<IHealthChecksBuilder> ConfigureHealth =>
         b =>
         {
-            b.AddUrlGroup(new Uri("http://www.microsoft.com"), HttpMethod.Get, "microsoft");
-            b.AddUrlGroup(new Uri("http://www.microsoftwithwrongurl.com"), HttpMethod.Get, "microsoftwithwrongurl");
+            b.AddUrlGroup(new Uri("http://httpbin.org/status/200"), HttpMethod.Get, "microsoft");
+            b.AddUrlGroup(new Uri("http://httpbintest.org/status/200"), HttpMethod.Get, "microsoftwithwrongurl");
         };
 }

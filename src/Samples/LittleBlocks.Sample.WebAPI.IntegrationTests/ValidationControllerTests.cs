@@ -1,5 +1,5 @@
 // This software is part of the LittleBlocks framework
-// Copyright (C) 2022 LittleBlocks
+// Copyright (C) 2024 LittleBlocks
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
@@ -40,7 +40,7 @@ public sealed class ValidationControllerTests
                 new Document()
             }
         };
-        using var fixture = TestApplicationFactory<StartupForIntegration>.Create();
+        await using var fixture = TestApplicationFactory<StartupForIntegration>.Create();
 
         // Act
         var response = await fixture.CreateClient().PostAsync("api/Validation", new JsonContent(request));
@@ -53,7 +53,7 @@ public sealed class ValidationControllerTests
     public async Task ForPostShouldReturnErrorWithMissingArguments()
     {
         // Arrange
-        using var fixture = TestApplicationFactory<StartupForIntegration>.Create();
+        await using var fixture = TestApplicationFactory<StartupForIntegration>.Create();
 
         // Act
         var response = await fixture.CreateClient().PostAsync("api/Validation",

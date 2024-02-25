@@ -1,5 +1,5 @@
 ﻿// This software is part of the LittleBlocks framework
-// Copyright (C) 2022 LittleBlocks
+// Copyright (C) 2024 LittleBlocks
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Net.Http;
+using Microsoft.Extensions.Hosting;
 
 namespace LittleBlocks.Sample.WebAPI.IntegrationTests.Helpers;
 
@@ -54,7 +55,7 @@ public sealed class TestApplicationFactory<TStartup> : WebApplicationFactory<TSt
             return Path.Combine(path, logsDirectory);
         }
     }
-
+    
     protected override IWebHostBuilder CreateWebHostBuilder()
     {
         var hostBuilder = WebHost.CreateDefaultBuilder()
@@ -69,16 +70,16 @@ public sealed class TestApplicationFactory<TStartup> : WebApplicationFactory<TSt
             })
             .UseStartup<TStartup>()
             .ConfigureServices(_options.ConfigureServices);
-
-        if (_options.EnableLoggingToFile)
-            hostBuilder.UseSerilog((context, configuration) =>
-            {
-                var loggerBuilder =
-                    new LoggerBuilder(context.HostingEnvironment, context.Configuration, configuration)
-                        .ConfigureLogger<TStartup>(c =>
-                            c.FlushToDiskEveryInMs(1).SaveLogsTo(LogFilePath));
-                loggerBuilder.Build<TStartup>();
-            });
+        //
+        // if (_options.EnableLoggingToFile)
+        //     hostBuilder.UseSerilog((context, configuration) =>
+        //     {
+        //         var loggerBuilder =
+        //             new LoggerBuilder(context.HostingEnvironment, context.Configuration, configuration)
+        //                 .ConfigureLogger<TStartup>(c =>
+        //                     c.FlushToDiskEveryInMs(1).SaveLogsTo(LogFilePath));
+        //         loggerBuilder.Build<TStartup>();
+        //     });
 
         return hostBuilder;
     }

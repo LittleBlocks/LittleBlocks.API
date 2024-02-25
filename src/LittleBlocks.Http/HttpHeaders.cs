@@ -1,5 +1,5 @@
 // This software is part of the LittleBlocks framework
-// Copyright (C) 2022 LittleBlocks
+// Copyright (C) 2024 LittleBlocks
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
@@ -20,4 +20,5 @@ public static class HttpHeaders
 {
     public const string HttpCorrelationId = "X-Correlation-ID";
     public const string HttpRequestId = "X-Request-ID";
+    public const string Authorization = "Authorization";
 }

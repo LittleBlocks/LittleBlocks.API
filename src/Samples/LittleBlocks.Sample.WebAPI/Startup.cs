@@ -1,5 +1,5 @@
 // This software is part of the LittleBlocks framework
-// Copyright (C) 2022 LittleBlocks
+// Copyright (C) 2024 LittleBlocks
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published by
@@ -41,8 +41,8 @@ public class Startup
                     c.AddUrlGroup(new Uri("https://github.com/littleblocks"), HttpMethod.Get, "LittleBlocks");
                     c.AddSeqPublisher(setup =>
                     {
-                        setup.Endpoint = Configuration["seq:ServerUrl"];
-                        setup.ApiKey = Configuration["seq:ApiKey"];
+                        setup.Endpoint = Configuration["Logging:Seq:ServerUrl"];
+                        setup.ApiKey = Configuration["Logging:Seq:ApiKey"];
                     });
                 })
                 .ConfigureMappings(c =>
