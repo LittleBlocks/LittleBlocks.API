@@ -16,16 +16,10 @@
 
 namespace LittleBlocks.Configurations;
 
-public sealed class AppInfo
+public sealed class AppInfo(string name, string version, string environment, string description = "")
 {
-    public AppInfo(string name, string version, string environment)
-    {
-        Name = name;
-        Version = version;
-        Environment = environment;
-    }
-
-    public string Name { get; }
-    public string Version { get; }
-    public string Environment { get; }
+    public string Name { get; } = name;
+    public string Version { get; } = version;
+    public string Environment { get; } = environment;
+    public string Description { get; } = description;
 }

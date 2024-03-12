@@ -15,14 +15,93 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Text.Json.Serialization;
-using AutoMapper.Features;
+using Asp.Versioning;
 using FluentValidation.AspNetCore;
-using LittleBlocks.AspNetCore.Documentation;
 using LittleBlocks.AspNetCore.RequestCorrelation;
-using LittleBlocks.Sample.Minimal.WebAPI.Extensions;
+using LittleBlocks.Configurations;
+using LittleBlocks.Logging.SeriLog;
+using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 using Serilog;
 
 namespace LittleBlocks.Sample.Minimal.WebAPI;
+
+public class WebApp
+{
+    public static IWebAppBuilder CreateBuilder(string[] args, Action<WebAppOptions> webAppOptions)
+    {
+        
+    }
+}
+
+public class WebAppOptions(AppInfo appInfo, HostInfo hostInfo, LoggingContext loggingContext)
+{
+    public AppInfo AppInfo { get; } = appInfo;
+    public HostInfo HostInfo { get; } = hostInfo;
+    public LoggingContext LoggingContext { get; }  = loggingContext;
+
+    public Action<ConfigureHostBuilder> ConfigureLogging { get; set; } = h =>
+        h.UseSerilog((context, configuration) => (context, configuration).ConfigureSerilog(loggingContext));
+    
+    public Action<JsonOptions> ConfigureJson { get; set; } = o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+    public Action<ApiVersioningOptions> ConfigureApiVersioning { get; set; } = o =>
+    {
+        o.ReportApiVersions = true;
+        o.ApiVersionReader = new MediaTypeApiVersionReader();
+        o.AssumeDefaultVersionWhenUnspecified = true;
+        o.ApiVersionSelector = new CurrentImplementationApiVersionSelector(o);
+    };
+    
+    public Action<ApiVersioningOptions> ConfigureDependencyHealthCheck { get; set; } = o =>
+    {
+        o.ReportApiVersions = true;
+        o.ApiVersionReader = new MediaTypeApiVersionReader();
+        o.AssumeDefaultVersionWhenUnspecified = true;
+        o.ApiVersionSelector = new CurrentImplementationApiVersionSelector(o);
+    };  
+    
+    public Action<IServiceCollection, AppInfo> ConfigureApiDocumentation { get; set; } = (services, appInfo) =>
+    {
+        services.AddEndpointsApiExplorer();
+        services.AddOpenApiDocumentation(appInfo);
+    };  
+}
+
+public interface IWebAppBuilder
+{
+    WebApplication Build();
+}
+
+public sealed class WebAppBuilder(string[] args, Action<WebAppOptions> configure) : IWebAppBuilder
+{
+    public WebApplication Build()
+    {
+        var builder = WebApplication.CreateBuilder(args);
+
+        var appInfo = builder.GetApplicationInfo();
+        var hostInfo = builder.GetHostInfo();
+        var loggingContext = builder.GetLoggingContext();
+
+        var options = new WebAppOptions(appInfo, hostInfo, loggingContext);
+
+        configure(options);
+
+        options.ConfigureLogging(builder.Host);
+
+        builder.Services.AddControllers()
+            .AddJsonOptions(o => options.ConfigureJson(o))
+            .AddFluentValidationAutoValidation();
+        
+        builder.Services.AddValidatorsFromAssemblyContaining<>();
+        
+        options.ConfigureApiVersioning()
+        
+        options.ConfigureLogging(builder.Host);
+    }
+}
+
+var appx = WebApp.CreateBuilder(args, o => { }).Build();
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,12 +125,10 @@ builder.Services.AddApiVersioning(o =>
 });
 
 builder.Services.AddDependencyHealthChecks();
-builder.Services.AddFeatures<Features<>>(builder.Configuration);
 
 builder.Services
     .AddSingleton(applicationInfo)
     .AddRouting(o => o.LowercaseUrls = true)
-    .AddMediatR(typeof(Program))
     .AddEndpointsApiExplorer()
     .AddOpenApiDocumentation(applicationInfo)
     .AddRequestCorrelation()
@@ -59,6 +136,11 @@ builder.Services
     .AddTypeMapping(c => c.AddProfile<MappingProfile>());
 
 var app = builder.Build();
+appx.RunAsync(o =>
+{
+    
+});
+
 app.UseRequestCorrelation();
 
 app.UseOpenApiDocumentation(applicationInfo);
@@ -78,7 +160,7 @@ app.UseHttpsRedirection(hostInfo);
 app.UseAuthorization();
 app.MapDependencyHealthChecks();
 app.MapControllers();
-app.MapStartPage(applicationInfo.Name);
+// app.MapStartPage(applicationInfo.Name);
 
 app.Run();
 
@@ -97,4 +179,8 @@ public class Program
         //             c.UseLoggly(s.Configuration.GetSection("Logging:Loggly")));
         //     }, args);
     }
+}
+
+public class MappingProfile : Profile
+{
 }

@@ -34,7 +34,11 @@
     <PackageReference Include="Serilog.Sinks.Literate" Version="3.0.0" />
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.ReDoc" Version="6.5.0" />
     <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="8.0.0" />
+    <PackageReference Include="CorrelationId" Version="3.0.1"/>
+    <PackageReference Include="MicroElements.Swashbuckle.FluentValidation" Version="6.0.0"/>
+    <PackageReference Include="GlobalExceptionHandler" Version="4.0.2"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LittleBlocks.Configurations\LittleBlocks.Configurations.csproj" />
