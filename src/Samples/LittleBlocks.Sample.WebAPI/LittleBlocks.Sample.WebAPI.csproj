@@ -6,9 +6,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="8.0.0" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="8.0.0" />
-    <PackageReference Include="AspNetcore.HealthChecks.Publisher.Seq" Version="8.0.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="8.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="8.0.1" />
+    <PackageReference Include="AspNetcore.HealthChecks.Publisher.Seq" Version="8.0.1" />
     <PackageReference Include="System.Linq.Async" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
