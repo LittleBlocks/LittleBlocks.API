@@ -14,16 +14,13 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using Microsoft.Extensions.Hosting;
+
 namespace LittleBlocks.Sample.WebAPI.IntegrationTests.Helpers;
 
-public class StartupForConfiguration
+public class StartupForConfiguration(IConfiguration configuration)
 {
-    public StartupForConfiguration(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
-
-    private IConfiguration Configuration { get; }
+    private IConfiguration Configuration { get; } = configuration;
 
     public void ConfigureServices(IServiceCollection services)
     {
@@ -35,8 +32,8 @@ public class StartupForConfiguration
         );
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
     {
-        app.UseDefaultApiPipeline(Configuration, env, loggerFactory);
+        app.UseDefaultApiPipeline(Configuration, env, lifetime, loggerFactory);
     }
 }

@@ -41,10 +41,9 @@ public static class HostAsWindowsService
                 config.ConfigureBuilder(options);
                 configurationConfigure(config);
             })
-            .UseSerilog((context, configuration) =>
+            .ConfigureServices((context, services) =>
             {
-                loggerConfigure(new LoggerBuilder(context.HostingEnvironment, context.Configuration,
-                    configuration)).Build<TStartup>();
+                loggerConfigure(new LoggerBuilder(services, context.HostingEnvironment, context.Configuration)).Build<TStartup>();
             })
             .Build();
 

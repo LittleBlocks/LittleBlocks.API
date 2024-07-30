@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Net.Http;
+using Microsoft.Extensions.Hosting;
 
 namespace LittleBlocks.Sample.WebAPI.IntegrationTests.Helpers;
 
@@ -46,10 +47,10 @@ public abstract class StartupForHealth<T> where T: class
                 })
         );
     }
-
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+    
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
     {
-        app.UseDefaultApiPipeline(Configuration, env, loggerFactory);
+        app.UseDefaultApiPipeline(Configuration, env, lifetime, loggerFactory);
     }
 }
 

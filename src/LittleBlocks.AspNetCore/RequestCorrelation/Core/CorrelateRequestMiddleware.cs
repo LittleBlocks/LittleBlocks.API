@@ -54,12 +54,12 @@ public class CorrelateRequestMiddleware
                     new List<string> {HttpHeaders.HttpCorrelationId, HttpHeaders.HttpRequestId});
 
             correlationId = _correlationIdProvider.GenerateId();
-            context.Request.Headers.Add(HttpHeaders.HttpRequestId, correlationId);
+            context.Request.Headers.Append(HttpHeaders.HttpRequestId, correlationId);
         }
 
         context.Response.OnStarting(state =>
         {
-            ((HttpContext) state).Response.Headers.Add(HttpHeaders.HttpRequestId, correlationId);
+            ((HttpContext) state).Response.Headers.Append(HttpHeaders.HttpRequestId, correlationId);
             return Task.FromResult(0);
         }, context);
 

@@ -16,19 +16,14 @@
 
 namespace LittleBlocks.AspNetCore.Bootstrap;
 
-public sealed class ApiPipelineOptions
+public sealed class ApiPipelineOptions(
+    IConfiguration configuration,
+    IHostEnvironment environment,
+    ILoggerFactory loggerFactory)
 {
-    public ApiPipelineOptions(IConfiguration configuration, IHostEnvironment environment,
-        ILoggerFactory loggerFactory)
-    {
-        Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        Environment = environment ?? throw new ArgumentNullException(nameof(environment));
-        LoggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
-    }
-
-    public IConfiguration Configuration { get; }
-    public IHostEnvironment Environment { get; }
-    public ILoggerFactory LoggerFactory { get; }
+    public IConfiguration Configuration { get; } = configuration ?? throw new ArgumentNullException(nameof(configuration));
+    public IHostEnvironment Environment { get; } = environment ?? throw new ArgumentNullException(nameof(environment));
+    public ILoggerFactory LoggerFactory { get; } = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
     public Action PostAuthenticationConfigure { get; } = null;
     public Action<IEndpointRouteBuilder> PreEndPointsConfigure { get; } = null;
     public Action<IEndpointRouteBuilder> PostEndPointsConfigure { get; } = null;
