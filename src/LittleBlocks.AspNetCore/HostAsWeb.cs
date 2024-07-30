@@ -39,7 +39,7 @@ public static class HostAsWeb
             })
             .ConfigureServices((context, services) =>
             {
-                loggerConfigure(new LoggerBuilder(context.HostingEnvironment, context.Configuration, new LoggerConfiguration())).Build<TStartup>();
+                loggerConfigure(new LoggerBuilder(services, context.HostingEnvironment, context.Configuration)).Build<TStartup>();
             })
             .Build();
 

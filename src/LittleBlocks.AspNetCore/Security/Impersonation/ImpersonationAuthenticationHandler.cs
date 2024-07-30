@@ -23,7 +23,7 @@ namespace LittleBlocks.AspNetCore.Security.Impersonation;
 public sealed class ImpersonationAuthenticationHandler : AuthenticationHandler<ImpersonationBearerOptions>
 {
     public ImpersonationAuthenticationHandler(IOptionsMonitor<ImpersonationBearerOptions> options,
-        ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
+        ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock): base(options, logger, encoder, clock)
     {
     }
 

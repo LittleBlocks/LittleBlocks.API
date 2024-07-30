@@ -40,7 +40,7 @@ public class CorrelateRequestMiddlewareTests
         var next = Substitute.For<RequestDelegate>();
         var sut = new CorrelateRequestMiddleware(next, options, idProvider);
         var context = GetDefaultHttpContext();
-        context.Request.Headers.Add(header, Guid.NewGuid().ToString());
+        context.Request.Headers.Append(header, Guid.NewGuid().ToString());
 
         // Act
         await sut.Invoke(context);

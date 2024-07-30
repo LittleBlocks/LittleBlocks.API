@@ -16,7 +16,11 @@
 
 namespace LittleBlocks.AspNetCore.Logging.SeriLog.Fluent;
 
-public sealed class LoggerBuilder : ILoggerBuilder, IBuildLogger
+public sealed class LoggerBuilder(
+    IServiceCollection services, 
+    IHostEnvironment environment,
+    IConfiguration configuration)
+    : ILoggerBuilder, IBuildLogger
 {
     private const string LogMessageTemplate =
         "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{MachineName}] [{EnvironmentUserName}] [{ProcessId}] " +
@@ -25,25 +29,18 @@ public sealed class LoggerBuilder : ILoggerBuilder, IBuildLogger
     private const string SerilogConfigSectionName = "Logging:Serilog";
     private const string SerilogMinimumLevelKey = "MinimumLevel";
     private const LogEventLevel DefaultLogLevel = LogEventLevel.Information;
-    private readonly IHostEnvironment _environment;
-    private readonly IConfiguration _configuration;
-    private readonly LoggerConfiguration _loggerConfiguration;
+    
+    private readonly IServiceCollection _services = services ?? throw new ArgumentNullException(nameof(services));
+    private readonly IHostEnvironment _environment = environment ?? throw new ArgumentNullException(nameof(environment));
+    private readonly IConfiguration _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 
     private Func<ISetFileSizeLimit, IBuildSeriLogOptions> _optionsProvider;
     private Func<ISinkBuilderContext, ISinkBuilderContext> _sinksProvider;
 
-    public LoggerBuilder(IHostEnvironment environment, IConfiguration configuration, LoggerConfiguration loggerConfiguration)
-    {
-        _environment = environment ?? throw new ArgumentNullException(nameof(environment));
-        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        _loggerConfiguration = loggerConfiguration ?? throw new ArgumentNullException(nameof(loggerConfiguration));
-    }
-
     public void Build<TStartup>() where TStartup : class
     {
-        ConfigureLogger<TStartup>(_loggerConfiguration, _optionsProvider, _sinksProvider);
+        _services.AddSerilog(lg => ConfigureLogger<TStartup>(lg, _optionsProvider, _sinksProvider));
     }
-
     public IConfiguration Configuration => _configuration;
     public IHostEnvironment Environment => _environment;
 
@@ -86,7 +83,7 @@ public sealed class LoggerBuilder : ILoggerBuilder, IBuildLogger
         Func<ISetFileSizeLimit, IBuildSeriLogOptions> optionsProvider,
         Func<ISinkBuilderContext, ISinkBuilderContext> sinksProvider) where TStartup : class
     {
-        if (loggerConfiguration == null) throw new ArgumentNullException(nameof(loggerConfiguration));
+        ArgumentNullException.ThrowIfNull(loggerConfiguration);
 
         var env = _environment;
         var configuration = _configuration;

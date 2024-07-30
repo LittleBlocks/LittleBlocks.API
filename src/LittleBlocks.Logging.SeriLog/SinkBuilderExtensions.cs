@@ -20,8 +20,8 @@ public static class SinkBuilderExtensions
 {
     public static ISinkBuilderContext BuildAndCloneContext(this ISinkBuilder builder, ISinkBuilderContext sinkBuilderContext)
     {
-        if (builder == null) throw new ArgumentNullException(nameof(builder));
-        if (sinkBuilderContext == null) throw new ArgumentNullException(nameof(sinkBuilderContext));
+        ArgumentNullException.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(sinkBuilderContext);
 
         var loggerConfiguration = builder.Build();
         return sinkBuilderContext.Clone(loggerConfiguration);

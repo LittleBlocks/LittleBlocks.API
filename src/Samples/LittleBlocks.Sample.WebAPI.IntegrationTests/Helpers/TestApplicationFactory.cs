@@ -19,20 +19,14 @@ using Microsoft.Extensions.Hosting;
 
 namespace LittleBlocks.Sample.WebAPI.IntegrationTests.Helpers;
 
-public sealed class TestApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
+public sealed class TestApplicationFactory<TStartup>(TestApplicationOptions options) : WebApplicationFactory<TStartup>
+    where TStartup : class
 {
     private const string LogsDirectoryPattern = "Logs\\{0}";
-    private const int LoggerFlushDelayInMs = 1000;
 
-    private readonly string _logFilePattern =
-        $"LittleBlocks.Sample.WebAPI.IntegrationTests-{EnvironmentNames.Integration}" + "-{0}.log";
+    private const string LogFilePattern = $"LittleBlocks.Sample.WebAPI.IntegrationTests-{EnvironmentNames.Integration}" + "-{0}.log";
 
-    private readonly TestApplicationOptions _options;
-
-    public TestApplicationFactory(TestApplicationOptions options)
-    {
-        _options = options ?? throw new ArgumentNullException(nameof(options));
-    }
+    private readonly TestApplicationOptions _options = options ?? throw new ArgumentNullException(nameof(options));
 
     private Guid SessionId { get; } = Guid.NewGuid();
 
@@ -41,7 +35,7 @@ public sealed class TestApplicationFactory<TStartup> : WebApplicationFactory<TSt
         get
         {
             var logsDirectory = LogDirectoryPath;
-            var fileName = string.Format(_logFilePattern, DateTime.Today.ToString("yyyyMMdd"));
+            var fileName = string.Format(LogFilePattern, DateTime.Today.ToString("yyyyMMdd"));
             return Path.Combine(logsDirectory, fileName);
         }
     }
@@ -65,7 +59,7 @@ public sealed class TestApplicationFactory<TStartup> : WebApplicationFactory<TSt
                 env.EnvironmentName = _options.Environment;
 
                 var configOptions = new ConfigurationOptions(env.ContentRootPath, env.EnvironmentName,
-                    env.ApplicationName, new string[] { });
+                    env.ApplicationName, []);
                 builder.ConfigureBuilder(configOptions);
             })
             .UseStartup<TStartup>()

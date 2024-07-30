@@ -1,4 +1,4 @@
-next-version: 2.1.0
+next-version: 2.2.0
 mode: Mainline
 major-version-bump-message: '\+semver:\s?(breaking|major)'
 minor-version-bump-message: '\+semver:\s?(feature|minor)'

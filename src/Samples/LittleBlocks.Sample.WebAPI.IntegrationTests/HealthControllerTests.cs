@@ -25,7 +25,7 @@ namespace LittleBlocks.Sample.WebAPI.IntegrationTests
         public async Task GivenAPIRunning_WhenHealthRequested_ShouldReturnHealthy()
         {
             // Arrange
-            using var fixture = TestApplicationFactory<StartupForHealthy>.Create();
+            await using var fixture = TestApplicationFactory<StartupForHealthy>.Create();
 
             // Act
             var response = await fixture.CreateClient().GetAsync($"health");

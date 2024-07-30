@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using Serilog;
+
 namespace LittleBlocks.AspNetCore.Bootstrap;
 
 public static class ApplicationBuilderExtensions
@@ -21,21 +23,29 @@ public static class ApplicationBuilderExtensions
     public static void UseDefaultApiPipeline(this IApplicationBuilder app,
         IConfiguration configuration,
         IWebHostEnvironment env,
+        IHostApplicationLifetime lifetime,
         ILoggerFactory loggerFactory)
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
-        if (configuration == null) throw new ArgumentNullException(nameof(configuration));
-        if (env == null) throw new ArgumentNullException(nameof(env));
-        if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
+        ArgumentNullException.ThrowIfNull(lifetime);
+        ArgumentNullException.ThrowIfNull(app);
+        ArgumentNullException.ThrowIfNull(configuration);
+        ArgumentNullException.ThrowIfNull(env);
+        ArgumentNullException.ThrowIfNull(loggerFactory);
 
+        InitiateFlushOutstandingOperations(lifetime);
         var options = new ApiPipelineOptions(configuration, env, loggerFactory);
         app.UseDefaultApiPipeline(options);
     }
 
-    public static void UseDefaultApiPipeline(this IApplicationBuilder app, ApiPipelineOptions options)
+    private static void InitiateFlushOutstandingOperations(IHostApplicationLifetime lifetime)
     {
-        if (app == null) throw new ArgumentNullException(nameof(app));
-        if (options == null) throw new ArgumentNullException(nameof(options));
+        lifetime.ApplicationStopped.Register(Log.CloseAndFlush);
+    }
+
+    private static void UseDefaultApiPipeline(this IApplicationBuilder app, ApiPipelineOptions options)
+    {
+        ArgumentNullException.ThrowIfNull(app);
+        ArgumentNullException.ThrowIfNull(options);
 
         var appInfo = options.Configuration.GetApplicationInfo();
         var authOptions = options.Configuration.GetAuthOptions();
@@ -87,8 +97,8 @@ public static class ApplicationBuilderExtensions
 
     public static void UseStartPage(this IEndpointRouteBuilder endpoints, string applicationName)
     {
-        if (endpoints == null) throw new ArgumentNullException(nameof(endpoints));
-        if (applicationName == null) throw new ArgumentNullException(nameof(applicationName));
+        ArgumentNullException.ThrowIfNull(endpoints);
+        ArgumentNullException.ThrowIfNull(applicationName);
 
         endpoints.MapGet("/", context =>
         {
@@ -128,6 +138,6 @@ public static class ApplicationBuilderExtensions
     private static void LogResolvedEnvironment(IHostEnvironment env, ILoggerFactory loggerFactory)
     {
         var log = loggerFactory.CreateLogger("Startup");
-        log.LogInformation($"Application is started in '{env.EnvironmentName.ToUpper()}' environment ...");
+        log.LogInformation($"{nameof(Application)} is started in '{env.EnvironmentName.ToUpper()}' environment ...");
     }
 }

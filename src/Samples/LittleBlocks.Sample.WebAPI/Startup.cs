@@ -65,9 +65,9 @@ public class Startup
         );
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime, ILoggerFactory loggerFactory)
     {
-        app.UseDefaultApiPipeline(Configuration, env, loggerFactory);
+        app.UseDefaultApiPipeline(Configuration, env, lifetime, loggerFactory);
         app.UseEndpoints(config =>
         {
             config.MapHealthChecksUI(m => m.AddCustomStylesheet("health-ui.css"));
