@@ -21,6 +21,7 @@ Boilerplate api provides the following features:
 * Swagger integration
 * Health endpoint exposed
 * Diagnostics endpoint
+* **Minimal API support** for modern .NET applications
 
 For using the full benefit of the library, Create a simple asp.net core project and install *EasyApi.AspNetCore.Bootstrap* nuget package.
 
@@ -34,10 +35,11 @@ Install-Package LittleBlocks.AspNetCore.Bootstrap
 
 ```
 
+## Traditional Usage with Startup Class
+
 In order to achieve all of this functionality you merely need a few lines of code. At this point your *Program.cs* should look like this:
 
 ```csharp
-
 
     public class Program
     {
@@ -78,6 +80,45 @@ In order to achieve all of this functionality you merely need a few lines of cod
     }
 
  ```
+
+## Minimal API Usage
+
+For minimal APIs, you can use the new simplified approach:
+
+```csharp
+
+using LittleBlocks.AspNetCore.Bootstrap;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Bootstrap LittleBlocks services
+builder.BootstrapLittleBlocks(app => app
+    .AddConfigSection<AppSettings>()
+    .HandleApplicationException<MyApplicationException>()
+    .ConfigureCorrelation(m => m.AutoCorrelateRequests())
+    .ConfigureHealthChecks(c =>
+    {
+        c.AddUrlGroup(new Uri("http://www.google.com"), HttpMethod.Get, "google");
+    })
+    .AddServices((container, config) =>
+    {
+        container.AddScoped<IMyService, MyService>();
+    })
+);
+
+var app = builder.Build();
+
+// Configure the pipeline
+app.UseLittleBlocksPipeline();
+
+// Define your minimal API endpoints
+app.MapGet("/api/hello", () => "Hello World!");
+
+app.Run();
+
+```
+
+This provides the same rich feature set including global error handling, logging, health checks, authentication, CORS, and Swagger documentation, but with the simplified minimal API approach.
 
 The project/solution is ready to be running in visual studio or using dotnet cli.
 
