@@ -50,43 +50,70 @@ public static class ApplicationBuilderExtensions
         var appInfo = options.Configuration.GetApplicationInfo();
         var authOptions = options.Configuration.GetAuthOptions();
 
-        if (options.Environment.IsDevelopment())
+        if (options.Features.HasFlag(ApiBootstrapperFeatures.ExceptionHandling))
         {
-            app.UseDeveloperExceptionPage();
-            app.UseMigrationsEndPoint();
-        }
-        else
-        {
-            app.UseGlobalExceptionHandler();
-            app.UseHsts();
+            if (options.Environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
+            }
+            else
+            {
+                app.UseGlobalExceptionHandler();
+                app.UseHsts();
+            }
         }
 
-        app.UseHttpsRedirection();
-        app.UseStaticFiles();
-        app.UseRequestCorrelation();
-        app.UseCorrelatedLogs();
+        if (options.Features.HasFlag(ApiBootstrapperFeatures.HttpsRedirection))
+            app.UseHttpsRedirection();
+
+        if (options.Features.HasFlag(ApiBootstrapperFeatures.StaticFiles))
+            app.UseStaticFiles();
+
+        if (options.Features.HasFlag(ApiBootstrapperFeatures.RequestCorrelation))
+        {
+            app.UseRequestCorrelation();
+            app.UseCorrelatedLogs();
+        }
+
         app.UseRouting();
-        app.UseCorsWithDefaultPolicy();
-        app.UseAuthentication();
-        app.UseAuthorization();
+
+        if (options.Features.HasFlag(ApiBootstrapperFeatures.Cors))
+            app.UseCorsWithDefaultPolicy();
+
+        if (options.Features.HasFlag(ApiBootstrapperFeatures.Authentication))
+        {
+            app.UseAuthentication();
+            app.UseAuthorization();
+        }
 
         options.PostAuthenticationConfigure?.Invoke();
 
         app.UseUserIdentityLogging();
-        app.UseDiagnostics();
-        app.UseOpenApiDocumentation(appInfo, u => u.ConfigureAuth(appInfo, authOptions.Authentication));
+
+        if (options.Features.HasFlag(ApiBootstrapperFeatures.Diagnostics))
+            app.UseDiagnostics();
+
+        if (options.Features.HasFlag(ApiBootstrapperFeatures.OpenApi))
+            app.UseOpenApiDocumentation(appInfo, u => u.ConfigureAuth(appInfo, authOptions.Authentication));
+
         app.UseEndpoints(endpoints =>
         {
             options.PreEndPointsConfigure?.Invoke(endpoints);
 
-            endpoints.MapHealthChecks("/health", new HealthCheckOptions
+            if (options.Features.HasFlag(ApiBootstrapperFeatures.HealthChecks))
             {
-                Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
-            });
-            endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+                });
+            }
 
-            if (options.EnableStartPage)
+            if (options.Features.HasFlag(ApiBootstrapperFeatures.Controllers))
+                endpoints.MapControllers();
+
+            if (options.Features.HasFlag(ApiBootstrapperFeatures.StartPage) && options.EnableStartPage)
                 options.StartPageConfigure?.Invoke(endpoints, appInfo);
 
             options.PostEndPointsConfigure?.Invoke(endpoints);
