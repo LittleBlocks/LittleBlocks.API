@@ -29,6 +29,7 @@ public sealed class ApiPipelineOptions(
     public Action<IEndpointRouteBuilder> PostEndPointsConfigure { get; } = null;
 
     public bool EnableStartPage { get; set; } = true;
+    public ApiBootstrapperFeatures Features { get; set; } = ApiBootstrapperFeatures.MvcDefaults;
     public Action<IEndpointRouteBuilder, AppInfo> StartPageConfigure { get; } =
         (builder, appInfo) => builder.UseStartPage(appInfo.Name);
 }
